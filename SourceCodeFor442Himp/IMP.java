@@ -104,7 +104,7 @@ class IMP implements MouseListener{
    
       fun.add(firstItem);
       
-      //adding the greyscale method to the menu
+      //adding the grayscale method to the menu
       secondItem.addActionListener(new ActionListener(){
         @Override
         public void actionPerformed(ActionEvent evt){grayScale();}
