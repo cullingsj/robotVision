@@ -95,7 +95,8 @@ class IMP implements MouseListener{
      JMenu fun = new JMenu("Functions");
      
      JMenuItem firstItem = new JMenuItem("MyExample - fun1 method");
-    
+     JMenuItem secondItem = new JMenuItem("Gray Scale method");
+
      firstItem.addActionListener(new ActionListener(){
             @Override
           public void actionPerformed(ActionEvent evt){fun1();}
@@ -106,7 +107,7 @@ class IMP implements MouseListener{
       //adding the greyscale method to the menu
       secondItem.addActionListener(new ActionListener(){
         @Override
-        public void actionPerformed(ActionEvent evt){greyScale();}
+        public void actionPerformed(ActionEvent evt){grayScale();}
          });
  
       fun.add(secondItem);
