@@ -1,1 +1,2 @@
-Welcome to the git directory for Robot Vision 2019 spring semester
+Welcome to Josh and Brendan's git directory for Robot Vision 2019 
+spring semester.
