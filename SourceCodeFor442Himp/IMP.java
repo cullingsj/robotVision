@@ -294,7 +294,13 @@ class IMP implements MouseListener{
          }
   	}
   }
-  
+
+  private void rotate(){
+	
+	// initializing new pixel array
+	int rgbArray[] = new int[4];
+	
+  }  
   
   private void quit()
   {  
