@@ -272,7 +272,7 @@ class IMP implements MouseListener{
   
   private void grayScale()
   {
-    for(int i=0; i<height; i++)
+    for(int i=0; i<height; i++){
         for(int j=0; j<width; j++)
         {   
            int rgbArray[] = new int[4];
@@ -291,15 +291,26 @@ class IMP implements MouseListener{
             
             //sets the pixel equal to the new values for R, G, and B
             picture[i][j] = getPixels(rgbArray);
-         }
-  	}
+        }
   }
+	resetPicture();
+}
 
   private void rotate(){
-	
-	// initializing new pixel array
-	int rgbArray[] = new int[4];
-	
+	//initializing the rotated picture 
+	int newPicture[][];
+	int picHeight = height;
+	for(int i=0; i<height; i++){
+		//resets the picHeight variable
+		int picHeight = height;
+		for(int j=0; j<width; j++){
+			picHeight--;
+			newPicture[j][i] = picture[height][j];
+		}
+	}
+	//sets the new picture 
+	picture = newPicture;
+	resetPicture();
   }  
   
   private void quit()
