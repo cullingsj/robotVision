@@ -27,7 +27,6 @@ class IMP implements MouseListener{
    int orientation = 0;
    //This will be your height and width of your 2d array
    int height=0, width=0;
-   int original[][];
    //your 2D array of pixels
     int picture[][];
 
@@ -181,23 +180,23 @@ class IMP implements MouseListener{
      for(int i=0; i<height; i++)
        for(int j=0; j<width; j++)
           picture[i][j] = pixels[i*width+j];
-      original = picture;
-     
   }
   /*
    *  This method takes the picture back to the original picture
    */
   private void reset()
   {
-        for(int i = 0; i<width*height; i++)
-             pixels[i] = results[i]; 
-       Image img2 = toolkit.createImage(new MemoryImageSource(width, height, pixels, 0, width)); 
-       picture = original;
+	  orientation = 0;
+	  for(int i = 0; i<width*height; i++)
+	  		pixels[i] = results[i];
+	  turnTwoDimensional();
+	  System.out.println("made it through reset");
+      Image img2 = toolkit.createImage(new MemoryImageSource(width, height, pixels, 0, width));
       JLabel label2 = new JLabel(new ImageIcon(img2));    
-       mp.removeAll();
-       mp.add(label2);
-       mp.revalidate(); 
-       mp.repaint();
+      mp.removeAll();
+      mp.add(label2);
+      mp.revalidate(); 
+      mp.repaint();
     }
   /*
    * This method is called to redraw the screen with the new image. 
@@ -209,16 +208,13 @@ class IMP implements MouseListener{
       	
       	//image has been rotated 90 degrees to the right
       	case 1:
-      		System.out.println("Excetuting case 1");
       		for(int j=0; j<width; j++)
       			for(int i=height-1; i>=0; i--)
       				pixels[j*height+i] = picture[i][j];
-      		img2 = toolkit.createImage(new MemoryImageSource(height, width, pixels, 0, height)); 
+      		img2 = toolkit.createImage(new MemoryImageSource(height, width, pixels, 0, height));
       		break;
-      	
       	//image has been rotated 180 degrees to the right i.e. upside down
       	case 2:
-      		System.out.println("Excetuting case 2");
       		for(int i=height-1; i>=0; i--)
       			for(int j=width-1; j>=0; j--)
       				pixels[i*width+j] = picture[i][j];
@@ -227,23 +223,19 @@ class IMP implements MouseListener{
       	
       	//image has been rotated 270 degrees to the right
       	case 3:
-      		System.out.println("Excetuting case 3");
       		for(int j=width-1; j>=0; j--)
       			for(int i=0; i<height; i++)
       				pixels[j*height+i] = picture[i][j];
-            img2 = toolkit.createImage(new MemoryImageSource(height, width, pixels, 0, height)); 
+            img2 = toolkit.createImage(new MemoryImageSource(height, width, pixels, 0, height));
       		break;
-      		
       	//image is in its original orientation
       	default:
-      		System.out.println("Excetuting default case");
       		for(int i=0; i<height; i++)
       			for(int j=0; j<width; j++)
       				pixels[i*width+j] = picture[i][j];
-            img2 = toolkit.createImage(new MemoryImageSource(width, height, pixels, 0, width)); 
+            img2 = toolkit.createImage(new MemoryImageSource(width, height, pixels, 0, width));
       		break;
       	}
-      	System.out.println("made it past the switch");
       JLabel label2 = new JLabel(new ImageIcon(img2));    
        mp.removeAll();
        mp.add(label2);
@@ -325,25 +317,25 @@ class IMP implements MouseListener{
            rgbArray = getPixelArray(picture[i][j]);
            
            // calculates the lumosity for current pixel
-            lumosity = (int) Math.round(0.21 * rgbArray[1] + 0.72 * rgbArray[2] + 0.07 * rgbArray[3]);
+           lumosity = (int) Math.round(0.21 * rgbArray[1] + 0.72 * rgbArray[2] + 0.07 * rgbArray[3]);
             
-            // Sets the R, G, and B values to the lumosity
-            rgbArray[1] = lumosity;
-            rgbArray[2] = lumosity;
-            rgbArray[3] = lumosity;
+           // Sets the R, G, and B values to the lumosity
+           rgbArray[1] = lumosity;
+           rgbArray[2] = lumosity;
+           rgbArray[3] = lumosity;
             
-            //sets the pixel equal to the new values for R, G, and B
-            picture[i][j] = getPixels(rgbArray);
+           //sets the pixel equal to the new values for R, G, and B
+           picture[i][j] = getPixels(rgbArray);
         }
   }
 	resetPicture();
 }
 
   private void rotate(){
-	//sets the new width and height of the picture
-	orientation++;
-	orientation = orientation%4;
-	resetPicture();
+	  //sets the new width and height of the picture
+	  orientation++;
+	  orientation = orientation%4;
+	  resetPicture();
   }  
   
   private void quit()
