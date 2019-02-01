@@ -25,7 +25,6 @@ class IMP implements MouseListener{
    int [] results;
    //Instance Fields you will be using below
    int orientation = 0;
-   int[][] newPicture;
    //This will be your height and width of your 2d array
    int height=0, width=0;
    
@@ -218,7 +217,7 @@ class IMP implements MouseListener{
       	default:
       		for(int i=0; i<height; i++)
       			for(int j=0; j<width; j++)
-      				pixels[i*width+j] = newPicture[i][j];
+      				pixels[i*width+j] = picture[i][j];
             img2 = toolkit.createImage(new MemoryImageSource(width, height, pixels, 0, width)); 
       		break;
       	}
@@ -320,22 +319,19 @@ class IMP implements MouseListener{
 
   private void rotate(){
 	//initializing the rotated picture 
-	newPicture = new int[height][width];
+	/**newPicture = new int[height][width];
 	int picHeight = height;
 	int newHeight = width;
 	int newWidth = height;
-	for(int i=0; i<width; i++){
+	for(int i=0; i<newHeight; i++){
 		//resets the picHeight variable
 		picHeight = height;
-		for(int j=0; j<height; j++){
+		for(int j=0; j<newWidth; j++){
 			picHeight--;
-			newPicture[i][j] = picture[picHeight][i];
+			newPicture[i][j] = picture[picHeight][j];
 		}
-	}
+	}**/
 	//sets the new width and height of the picture
-	picHeight = height;
-	height = width;
-	width = picHeight;
 	orientation++;
 	orientation = orientation%2;
 	resetPicture();
