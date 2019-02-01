@@ -380,8 +380,13 @@ class IMP implements MouseListener{
               for(int i=-2;i<=2;i++){
                   for(int j=-2;j<=2;j++){
                 	  //double checks to make sure the current pixel isn't outside of the array
-                	  if((x+i)<height-1&&(x+i)>=0&&(y+j)<width-1&&(y+j)>=0){
+                	  try{
+                		  //if((x+i)<height-1&&(x+i)>=0&&(y+j)<width-1&&(y+j)>=0){
                 		  local[i][j]= picture[(x+i)][(y+j)];
+                		  //}
+                	  }catch(Exception e){
+                		  System.out.println(e);
+                		  continue;
                 	  }
                   }
               }
