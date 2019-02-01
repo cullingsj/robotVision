@@ -353,7 +353,7 @@ class IMP implements MouseListener{
 }
 
   private void rotate(){
-	  //sets the new width and height of the picture
+	  //increments the orientation
 	  orientation++;
 	  orientation = orientation%4;
 	  
@@ -363,6 +363,7 @@ class IMP implements MouseListener{
 
   private void edge()
   {
+	  //turns the image grayscale
       grayScale();
       int[][] mask ={
           {1,	1,	1,	1,	1},
@@ -378,6 +379,7 @@ class IMP implements MouseListener{
               int[][] local = new int[5][5];
               for(int i=0;i<5;i++){
                   for(int j=0;j<5;j++){
+                	  //double checks to make sure the current pixel isn't outside of the array
                 	  if((x+i)<height-1&&(x+i)>=0&&(y+j)<width-1&&(y+j)>=0){
                 		  local[i][j]= picture[(x+i)][(y+j)];
                 	  }
@@ -400,6 +402,7 @@ class IMP implements MouseListener{
   private void blur(){
 	  //initializing new array to store blurred pixels
 	  int blurredPic[][] = new int[height][width];
+	  //increments through each pixel of picture
 	  for(int i=0; i<height; i++){
 		  for(int j=0; j<width; j++){
 			  int rgb[] = new int[4];
@@ -407,6 +410,8 @@ class IMP implements MouseListener{
 			  int redAvg = 0;
 			  int greenAvg = 0;
 			  int blueAvg = 0;
+			  //Increments through the the surrounding pixels, including the current pixel.
+			  //If they are inside the array it will get the rgb values and add them to the average.
 			  for(int x=-1; x<=1; x++){
 				  for(int y=-1; y<=1; y++){
 			          int rgbArray[] = new int[4];
@@ -418,12 +423,15 @@ class IMP implements MouseListener{
 			          }
 				  }
 			  }
+			  //takes the sum of the rgb values divides them by 
 			  rgb[1] = redAvg/9;
 			  rgb[2] = greenAvg/9;
 			  rgb[3] = blueAvg/9;
+			  //sets the current pixels rgb values to the average of the surrounding rgb values.
 			  blurredPic[i][j] = getPixels(rgb);
 		  }
 	  }
+	  //sets the picture equal to the blurred image
 	  picture = blurredPic;
 	  resetPicture();
   }
