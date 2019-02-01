@@ -24,7 +24,8 @@ class IMP implements MouseListener{
    int [] pixels;
    int [] results;
    //Instance Fields you will be using below
-   
+   int orientation = 0;
+   int[][] newPicture;
    //This will be your height and width of your 2d array
    int height=0, width=0;
    
@@ -96,6 +97,7 @@ class IMP implements MouseListener{
      
      JMenuItem firstItem = new JMenuItem("MyExample - fun1 method");
      JMenuItem secondItem = new JMenuItem("Gray Scale method");
+     JMenuItem thirdItem = new JMenuItem("Rotate Method");
 
      firstItem.addActionListener(new ActionListener(){
             @Override
@@ -111,6 +113,14 @@ class IMP implements MouseListener{
          });
  
       fun.add(secondItem);
+      
+      //adding the rotate method to the menu
+      thirdItem.addActionListener(new ActionListener(){
+        @Override
+        public void actionPerformed(ActionEvent evt){rotate();}
+         });
+ 
+      fun.add(thirdItem);
       
       return fun;   
   }
@@ -196,10 +206,22 @@ class IMP implements MouseListener{
    */
   private void resetPicture()
   {
-       for(int i=0; i<height; i++)
-       for(int j=0; j<width; j++)
-          pixels[i*width+j] = picture[i][j];
-      Image img2 = toolkit.createImage(new MemoryImageSource(width, height, pixels, 0, width)); 
+	  	Image img2;
+      	switch (orientation){       
+      	case 1:
+      		for(int j=0; j<width; j++)
+      			for(int i=height-1; i>=0; i--)
+      				pixels[i*height+j] = picture[i][j];
+            img2 = toolkit.createImage(new MemoryImageSource(height, width, pixels, 0, height)); 
+      		break;
+      	
+      	default:
+      		for(int i=0; i<height; i++)
+      			for(int j=0; j<width; j++)
+      				pixels[i*width+j] = newPicture[i][j];
+            img2 = toolkit.createImage(new MemoryImageSource(width, height, pixels, 0, width)); 
+      		break;
+      	}
 
       JLabel label2 = new JLabel(new ImageIcon(img2));    
        mp.removeAll();
@@ -282,7 +304,7 @@ class IMP implements MouseListener{
            rgbArray = getPixelArray(picture[i][j]);
            
            // calculates the lumosity for current pixel
-            lumosity = 0.21 * rgbArray[1] + 0.72 * rgbArray[2] + 0.07 * rgbArray[3];
+            lumosity = (int) Math.round(0.21 * rgbArray[1] + 0.72 * rgbArray[2] + 0.07 * rgbArray[3]);
             
             // Sets the R, G, and B values to the lumosity
             rgbArray[1] = lumosity;
@@ -298,18 +320,24 @@ class IMP implements MouseListener{
 
   private void rotate(){
 	//initializing the rotated picture 
-	int newPicture[][];
+	newPicture = new int[height][width];
 	int picHeight = height;
-	for(int i=0; i<height; i++){
+	int newHeight = width;
+	int newWidth = height;
+	for(int i=0; i<width; i++){
 		//resets the picHeight variable
-		int picHeight = height;
-		for(int j=0; j<width; j++){
+		picHeight = height;
+		for(int j=0; j<height; j++){
 			picHeight--;
-			newPicture[j][i] = picture[height][j];
+			newPicture[i][j] = picture[picHeight][i];
 		}
 	}
-	//sets the new picture 
-	picture = newPicture;
+	//sets the new width and height of the picture
+	picHeight = height;
+	height = width;
+	width = picHeight;
+	orientation++;
+	orientation = orientation%2;
 	resetPicture();
   }  
   
