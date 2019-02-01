@@ -98,6 +98,8 @@ class IMP implements MouseListener{
      JMenuItem thirdItem = new JMenuItem("Rotate Method");
      JMenuItem fourthItem = new JMenuItem("Edge Method");
      JMenuItem fifthItem = new JMenuItem("Blur Method");
+     JMenuItem sixthItem = new JMenuItem("Histogram");
+     JMenuItem seventhItem = new JMenuItem("Equalize");
 
      firstItem.addActionListener(new ActionListener(){
             @Override
@@ -140,8 +142,21 @@ class IMP implements MouseListener{
  
       fun.add(fifthItem);
       
+      //adding the blur method to the menu
+      sixthItem.addActionListener(new ActionListener(){
+        @Override
+        public void actionPerformed(ActionEvent evt){histogram();}
+         });
+ 
+      fun.add(sixthItem);
 
-    
+      //adding the blur method to the menu
+      seventhItem.addActionListener(new ActionListener(){
+        @Override
+        public void actionPerformed(ActionEvent evt){equalize();}
+         });
+ 
+      fun.add(seventhItem);
       return fun;   
   }
   
@@ -397,10 +412,17 @@ class IMP implements MouseListener{
                       picture[i][j] = local[i][j];
                   }
               }
-              
           }    
       }
       resetPicture();
+  }
+  
+  private void histogram(){
+	  
+  }
+  
+  private void equalize(){
+	  
   }
         
   private void blur(){
