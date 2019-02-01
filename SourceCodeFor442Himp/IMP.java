@@ -1,7 +1,11 @@
+package imageprocessing;
+
 /*
  *Hunter Lloyd
  * Copyrite.......I wrote, ask permission if you want to use it outside of class. 
  */
+
+/*Josh Cullings and Brendan Blanchard's lab*/
 
 import javax.swing.*;
 import java.awt.*;
@@ -383,7 +387,7 @@ class IMP implements MouseListener{
       int[][] mask ={
           {1,	1,	1,	1,	1},
           {1,	0,	0,	0,	1},
-          {1,	0,	16,	0,	1},
+          {1,	0,	-24,	0,	1},
           {1,	0,	0,	0,	1},
           {1,	1,	1,	1,	1}   
       };
@@ -391,6 +395,9 @@ class IMP implements MouseListener{
       for (int y = 0;y<height-1;y++){
           for(int x = 0;x<width-1;x++){
               
+              int rgbArray[] = new int[4];
+                  rgbArray = getPixelArray(picture[y][x]);
+
               int[][] local = new int[5][5];
               for(int i=-2;i<=2;i++){
                   for(int j=-2;j<=2;j++){
