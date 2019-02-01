@@ -1,5 +1,3 @@
-package imageprocessing;
-
 /*
  *Hunter Lloyd
  * Copyrite.......I wrote, ask permission if you want to use it outside of class. 
@@ -13,6 +11,7 @@ import java.awt.event.*;
 import java.io.File;
 import java.awt.image.PixelGrabber;
 import java.awt.image.MemoryImageSource;
+import java.util.Arrays;
 import java.util.prefs.Preferences;
 
 class IMP implements MouseListener{
@@ -396,18 +395,15 @@ class IMP implements MouseListener{
           for(int x = 0;x<width-1;x++){
               
               int rgbArray[] = new int[4];
-                  rgbArray = getPixelArray(picture[y][x]);
+              rgbArray = getPixelArray(picture[y][x]);
 
               int[][] local = new int[5][5];
               for(int i=-2;i<=2;i++){
                   for(int j=-2;j<=2;j++){
                 	  //double checks to make sure the current pixel isn't outside of the array
                 	  try{
-                		  //if((x+i)<height-1&&(x+i)>=0&&(y+j)<width-1&&(y+j)>=0){
                 		  local[i][j]= picture[(x+i)][(y+j)];
-                		  //}
                 	  }catch(Exception e){
-                		  System.out.println(e);
                 		  continue;
                 	  }
                   }
@@ -425,7 +421,50 @@ class IMP implements MouseListener{
   }
   
   private void histogram(){
-	  
+	  //This is in my histogram function in IMP
+		  
+	  //first count all pixel values in R and G and B array
+		  
+	  // Then pass those arrays to MyPanel constructor
+		  
+	  //Then when button is pushed call drawHistogram in MyPanel.....you write DrawHistogram
+		
+	  //Don't forget to call repaint();
+
+	  int[] red = new int[256];
+	  int[] green = new int[256];
+	  int[] blue = new int [256];
+	  Arrays.fill(red, 0);
+	  Arrays.fill(green, 0);
+	  Arrays.fill(blue, 0);
+	  int[] rgbArray = new int[4];
+	  for(int i=0; i<height; i++){
+	        for(int j=0; j<width; j++){ 
+	        	rgbArray = getPixelArray(picture[i][j]);
+	        	red[rgbArray[1]]++;
+	        	green[rgbArray[2]]++;
+	        	blue[rgbArray[3]]++;
+	        }
+	  }
+	  JFrame redFrame = new JFrame("Red");
+	  redFrame.setSize(305, 600);
+	  redFrame.setLocation(500, 0);
+	  JFrame greenFrame = new JFrame("Green");
+	  greenFrame.setSize(305, 600);
+	  greenFrame.setLocation(800, 0);
+	  JFrame blueFrame = new JFrame("blue");
+	  blueFrame.setSize(305, 600);
+	  blueFrame.setLocation(1100, 0);
+	  MyPanel redPanel = new MyPanel(red);
+	  MyPanel greenPanel = new MyPanel(green);
+	  MyPanel bluePanel = new MyPanel(blue);
+	  redFrame.getContentPane().add(redPanel, BorderLayout.CENTER);
+	  redFrame.setVisible(true);
+	  greenFrame.getContentPane().add(greenPanel, BorderLayout.CENTER);
+	  greenFrame.setVisible(true);
+	  blueFrame.getContentPane().add(bluePanel, BorderLayout.CENTER);
+	  blueFrame.setVisible(true);
+	  start.setEnabled(true);
   }
   
   private void equalize(){
@@ -495,5 +534,4 @@ class IMP implements MouseListener{
    {
       IMP imp = new IMP();
    }
- 
 }

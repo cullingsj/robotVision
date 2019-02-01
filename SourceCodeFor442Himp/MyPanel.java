@@ -1,4 +1,3 @@
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -8,14 +7,15 @@ public class MyPanel extends JPanel
 {
  
 int startX, flag, startY, endX, endY;
-
+int[] range;
     BufferedImage grid;
     Graphics2D gc;
 
-	public MyPanel()
+	public MyPanel(int[] color)
 	{
 	   startX = startY = 0;
-           endX = endY = 100;
+       endX = endY = 100;
+       range = color;
  	}
 
      public void clear()
@@ -32,7 +32,6 @@ int startX, flag, startY, endX, endY;
             int h = this.getHeight();
             grid = (BufferedImage)(this.createImage(w,h));
             gc = grid.createGraphics();
-
          }
          g2.drawImage(grid, null, 0, 0);
      }
