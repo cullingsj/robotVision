@@ -1,3 +1,5 @@
+package imageprocessing;
+
 /*
  *Hunter Lloyd
  * Copyrite.......I wrote, ask permission if you want to use it outside of class. 
@@ -96,6 +98,7 @@ class IMP implements MouseListener{
      JMenuItem firstItem = new JMenuItem("MyExample - fun1 method");
      JMenuItem secondItem = new JMenuItem("Gray Scale method");
      JMenuItem thirdItem = new JMenuItem("Rotate Method");
+     JMenuItem fourthItem = new JMenuItem("Edge");
 
      firstItem.addActionListener(new ActionListener(){
             @Override
@@ -119,6 +122,15 @@ class IMP implements MouseListener{
          });
  
       fun.add(thirdItem);
+      
+       //adding the edge method to the menu
+      fourthItem.addActionListener(new ActionListener(){
+        @Override
+        public void actionPerformed(ActionEvent evt){edge();}
+         });
+ 
+      fun.add(fourthItem);
+      
       
       return fun;   
   }
@@ -336,6 +348,41 @@ class IMP implements MouseListener{
 	  orientation = orientation%4;
 	  resetPicture();
   }  
+  
+  private void edge()
+  {
+      grayScale();
+      int[][] mask ={
+          {1,	1,	1,	1,	1},
+          {1,	1,	1,	1,	1},
+          {1,	1,	16,	1,	1},
+          {1,	1,	1,	1,	1},
+          {1,	1,	1,	1,	1}   
+      };
+      
+      for (int y = 1;y<height-1;y++){
+          for(int x=1;x<width-1;x++){
+              
+              int[][] local = new int[5][5];
+              for(int i=0;i<5;i++){
+                  for(int j=0;j<5;j++){
+                      local[i][j]= picture[(x-1+i)][(y-1+j)];
+                  }
+              }
+              
+              for(int i=0;i<5;i++){
+                  for(int j=0;j<5;j++){
+                      local[i][j]=local[i][j]*mask[i][j];
+                      picture[i][j] = local[i][j];
+                  }
+              }
+              
+          }    
+      }
+      resetPicture();
+      
+      
+  }
   
   private void quit()
   {  
