@@ -367,9 +367,9 @@ class IMP implements MouseListener{
       grayScale();
       int[][] mask ={
           {1,	1,	1,	1,	1},
-          {1,	1,	1,	1,	1},
-          {1,	1,	16,	1,	1},
-          {1,	1,	1,	1,	1},
+          {1,	0,	0,	0,	1},
+          {1,	0,	16,	0,	1},
+          {1,	0,	0,	0,	1},
           {1,	1,	1,	1,	1}   
       };
       
@@ -377,8 +377,8 @@ class IMP implements MouseListener{
           for(int x = 0;x<width-1;x++){
               
               int[][] local = new int[5][5];
-              for(int i=0;i<5;i++){
-                  for(int j=0;j<5;j++){
+              for(int i=-2;i<=2;i++){
+                  for(int j=-2;j<=2;j++){
                 	  //double checks to make sure the current pixel isn't outside of the array
                 	  if((x+i)<height-1&&(x+i)>=0&&(y+j)<width-1&&(y+j)>=0){
                 		  local[i][j]= picture[(x+i)][(y+j)];
@@ -397,8 +397,7 @@ class IMP implements MouseListener{
       }
       resetPicture();
   }
-      
-      
+        
   private void blur(){
 	  //initializing new array to store blurred pixels
 	  int blurredPic[][] = new int[height][width];
