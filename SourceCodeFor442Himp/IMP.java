@@ -96,6 +96,7 @@ class IMP implements MouseListener{
      JMenuItem firstItem = new JMenuItem("MyExample - fun1 method");
      JMenuItem secondItem = new JMenuItem("Gray Scale method");
      JMenuItem thirdItem = new JMenuItem("Rotate Method");
+     JMenuItem fourthItem = new JMenuItem("Blur Method");
 
      firstItem.addActionListener(new ActionListener(){
             @Override
@@ -119,6 +120,14 @@ class IMP implements MouseListener{
          });
  
       fun.add(thirdItem);
+      
+      //adding the blur method to the menu
+      fourthItem.addActionListener(new ActionListener(){
+        @Override
+        public void actionPerformed(ActionEvent evt){blur();}
+         });
+ 
+      fun.add(fourthItem);
       
       return fun;   
   }
@@ -207,8 +216,8 @@ class IMP implements MouseListener{
       	
       	//image has been rotated 90 degrees to the right
       	case 1:
-      		for(int j=0; j<width; j++)
-      			for(int i=height-1; i>=0; i--)
+      		for(int i=0; i<height; i++)
+      			for(int j=width-1; j>=0; j--)
       				pixels[j*height+i] = picture[i][j];
       		img2 = toolkit.createImage(new MemoryImageSource(height, width, pixels, 0, height));
       		break;
@@ -217,22 +226,22 @@ class IMP implements MouseListener{
       		for(int i=height-1; i>=0; i--)
       			for(int j=width-1; j>=0; j--)
       				pixels[i*width+j] = picture[i][j];
-            img2 = toolkit.createImage(new MemoryImageSource(width, height, pixels, 0, width)); 
+      		img2 = toolkit.createImage(new MemoryImageSource(width, height, pixels, 0, width)); 
       		break;
       	
       	//image has been rotated 270 degrees to the right
       	case 3:
-      		for(int j=width-1; j>=0; j--)
-      			for(int i=0; i<height; i++)
+      		for(int i=height-1; i>=0; i--)
+      			for(int j=0; j<width; j++)
       				pixels[j*height+i] = picture[i][j];
-            img2 = toolkit.createImage(new MemoryImageSource(height, width, pixels, 0, height));
+      		img2 = toolkit.createImage(new MemoryImageSource(height, width, pixels, 0, height));
       		break;
       	//image is in its original orientation
       	default:
       		for(int i=0; i<height; i++)
       			for(int j=0; j<width; j++)
       				pixels[i*width+j] = picture[i][j];
-            img2 = toolkit.createImage(new MemoryImageSource(width, height, pixels, 0, width));
+      		img2 = toolkit.createImage(new MemoryImageSource(width, height, pixels, 0, width));
       		break;
       	}
       JLabel label2 = new JLabel(new ImageIcon(img2));    
@@ -334,8 +343,39 @@ class IMP implements MouseListener{
 	  //sets the new width and height of the picture
 	  orientation++;
 	  orientation = orientation%4;
+	  
 	  resetPicture();
   }  
+  
+  private void blur(){
+	  int blurredPic[][] = new int[height][width];
+	  for(int i=1; i<height; i++){
+		  for(int j=1; j<width; j++){
+			  int rgb[] = new int[4];
+			  rgb = getPixelArray(picture[i][j]);
+			  int redAvg = 0;
+			  int greenAvg = 0;
+			  int blueAvg = 0;
+			  for(int x=-1; x<1; x++){
+				  for(int y=-1; y<1; y++){
+			          int rgbArray[] = new int[4];
+			          if((i+x)>=0&&(i+x)<height&&(j+y)>=0&&(j+y)<width){
+			          		rgbArray = getPixelArray(picture[i+x][j+y]);
+			          		redAvg+=rgbArray[1];
+			          		greenAvg+=rgbArray[2];
+			          		blueAvg+=rgbArray[3];
+			          }
+				  }
+			  }
+			  rgb[1] = redAvg/9;
+			  rgb[2] = greenAvg/9;
+			  rgb[3] = blueAvg/9;
+			  blurredPic[i][j] = getPixels(rgb);
+		  }
+	  }
+	  picture = blurredPic;
+	  resetPicture();
+  }
   
   private void quit()
   {  
