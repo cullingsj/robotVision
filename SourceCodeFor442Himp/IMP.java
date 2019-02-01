@@ -1,5 +1,3 @@
-package imageprocessing;
-
 /*
  *Hunter Lloyd
  * Copyrite.......I wrote, ask permission if you want to use it outside of class. 
@@ -399,8 +397,8 @@ class IMP implements MouseListener{
       
   private void blur(){
 	  int blurredPic[][] = new int[height][width];
-	  for(int i=1; i<height-1; i++){
-		  for(int j=1; j<width-1; j++){
+	  for(int i=0; i<height; i++){
+		  for(int j=0; j<width; j++){
 			  int rgb[] = new int[4];
 			  rgb = getPixelArray(picture[i][j]);
 			  int redAvg = 0;
