@@ -372,13 +372,15 @@ class IMP implements MouseListener{
           {1,	1,	1,	1,	1}   
       };
       
-      for (int y = 1;y<height-1;y++){
-          for(int x=1;x<width-1;x++){
+      for (int y = 0;y<height-1;y++){
+          for(int x = 0;x<width-1;x++){
               
               int[][] local = new int[5][5];
               for(int i=0;i<5;i++){
                   for(int j=0;j<5;j++){
-                      local[i][j]= picture[(x-1+i)][(y-1+j)];
+                	  if((x+i)<height-1&&(x+i)>=0&&(y+j)<width-1&&(y+j)>=0){
+                		  local[i][j]= picture[(x+i)][(y+j)];
+                	  }
                   }
               }
               
@@ -396,6 +398,7 @@ class IMP implements MouseListener{
       
       
   private void blur(){
+	  //initializing new array to store blurred pixels
 	  int blurredPic[][] = new int[height][width];
 	  for(int i=0; i<height; i++){
 		  for(int j=0; j<width; j++){
