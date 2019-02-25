@@ -1,6 +1,5 @@
 #############################
-# Author: Joshua Cullings & #
-#         Brendan Blanchard #
+# Author: Joshua Cullings   #
 #                           #
 # Date Modified: 2/14/2019  #
 #                           #
@@ -51,13 +50,13 @@ while(True):
     image1 = frame
     acc = np.float32(image1)
     gray = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
-    
+
     if ad == 1 or lowThresh == 1 or highThresh == 1:
         grayKey = 1
 
     #grayscale functionality
     if grayKey == 1:
-        image1 = cv.cvtColor(image1, cv.COLOR_BGR2GRAY)       
+        image1 = cv.cvtColor(image1, cv.COLOR_BGR2HSV)       
 
     #absdiff functionality
     if ad == 1:
@@ -92,27 +91,26 @@ while(True):
         for contour in contours:
             area = cv.contourArea(contour)
             if (area>1000):
-                cv.drawContours(frame, contour, -1, (0, 0, 255), 3)
+                cv.drawContours(frame, contour, -1, (0, 0, 255), 2)
 
     #Draws bounding boxes centered on the significant blobs
     if rect == 1:
         #gray = cv.bitwise_not(gray)
         gray = cv.filter2D(gray, -1, blurKey)
-        holder, gray = cv.threshold(gray, 127, 255, cv.THRESH_BINARY)
-        image1 = gray
+        holder, gray = cv.threshold(gray, 100, 255, cv.THRESH_BINARY)
         contours, _ = cv.findContours(gray, cv.RETR_TREE, cv.CHAIN_APPROX_SIMPLE)
         for contour in contours:
             area = cv.contourArea(contour)
-            if (area>2000):
+            if (area>2000 and area<50000):
                 x, y, z, h = cv.boundingRect(contour)
-                cv.rectangle(frame, (x, y), (x+z, y+h), (0, 0, 255), 3)
-                
+                cv.rectangle(frame, (x, y), (x+z, y+h), (0, 0, 255), 2)
+
     cv.imshow('image1', image1)
     
     #print(frame)   
     cv.imshow('Live Feed', frame)
     
-    keyboard = cv.waitKey(1)
+    keyboard = cv.waitKey(100)
     if keyboard == 27:
         break
 
@@ -178,6 +176,8 @@ cv.destroyAllWindows()
 #####################################
 # RESOURCES USED:                   #
 # - opencv/sources/samples/python   #
-#                                   #
+# - https://stackoverflow.com/      #
+#   questions/13538748/crop-black-  #
+#   edges-with-opencv               #
 #####################################
 
