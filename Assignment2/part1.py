@@ -76,11 +76,11 @@ cv.createTrackbar("Sat Lower", "Sliders", 0, 255, setSatLower)
 cv.createTrackbar("Val Lower", "Sliders", 0, 255, setValueLower)
 
 cv.imshow("Sliders", sliderSize)
-
+frame = cv.imread("candy.jpg")
 while(True):
-    tf, frame = src.read()
+    #tf, frame = src.read()
     hsv = cv.cvtColor(frame, cv.COLOR_BGR2HSV)
-    cv.setMouseCallback("HSV", setLU)
+    cv.setMouseCallback("Live Feed", setLU)
     cv.imshow("Live Feed", frame)
     
     #hsv functionality

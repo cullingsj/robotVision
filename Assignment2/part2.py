@@ -41,12 +41,12 @@ findC = 0
 store = 0
 rect = 0
 
-src = cv.VideoCapture(0)
-previous = src.read()
+#src = cv.VideoCapture(0)
+#previous = src.read()
 
-#frame = cv.imread("japaneseflowers.jpg", cv.IMREAD_COLOR)
+frame = cv.imread("candy.jpg", cv.IMREAD_COLOR)
 while(True):
-    tf, frame = src.read()
+    #tf, frame = src.read()
     image1 = frame
     acc = np.float32(image1)
     gray = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
